@@ -1,0 +1,27 @@
+body{
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.board {
+    width: 400px;
+    height: 400px;
+    background-color: #cdc1b5;
+    border: solid 6px #bbada0;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tile{
+    width: 90px;
+    height: 90px;
+    border: 5px solid #bbada0;
+
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
