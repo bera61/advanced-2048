@@ -4,6 +4,7 @@ let width = 4;
 let board=[];
 startGame();
 let value = 0;
+let rightMove, downMove, upMove, leftMove = false;
 
 function startGame(){
     createBoard();
@@ -205,18 +206,31 @@ function moveRight() {
 window.addEventListener('keydown', (event) => {
     if(event.key === 'ArrowRight' || event.key === 'd') {
         moveRight();
+        rightMove = true;
     }
     if(event.key === 'ArrowDown' || event.key === 's') {
         moveDown();
+        downMove = true;
     }
     if(event.key === 'ArrowUp' || event.key === 'w') {
         moveUp();
+        upMove = true;
     }
     if(event.key === 'ArrowLeft' || event.key === 'a') {
         moveLeft();
+        leftMove = true;
     }
             if(checkGameOver()) {
             alert('Game Over!');
             resetGame();
         }
 });
+
+document.querySelector('.reset-button').addEventListener('click', () => {
+    score.innerHTML = '0';
+    resetGame();
+});
+document.querySelector('.undo').addEventListener('click', () => {
+            if(rightMove) {}
+        }
+    )

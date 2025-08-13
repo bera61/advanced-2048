@@ -1,6 +1,7 @@
 body{
     font-family: Arial, sans-serif;
     text-align: center;
+    background-color: #e6c8ac;
 }
 
 .board {
@@ -25,4 +26,23 @@ body{
     justify-content: center;
     align-items: center;
     color: #96887bff;
+}
+
+button{
+    width: 200px;
+    height: 50px;
+    margin-top: 50px;
+    background-color: #8f7a66;
+    border: 5px solid #bbada0;
+    color: #f9f6f2;
+    font-size: 20px;
+    cursor: pointer;
+}
+h2, #score {
+    font-size: 30px;
+    color: #eee4da;
+    background-color: #8f7a66;
+    width: 200px;
+    margin: 20px auto;
+    border-radius: 20px;
 }
