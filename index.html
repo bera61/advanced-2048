@@ -10,8 +10,17 @@
     <div class="game">
         <h2>Score <span id="score">0</span></h2>
         <div class="board"></div>
-        <button class="undo">undo</button>
-        <button class="reset-button">reset game</button>
+        <div class="button-row">
+            <button class="undo">
+                undo
+                <div class="undo-bonus-row">
+                    <div class="remainUndoBonus active"></div>
+                    <div class="remainUndoBonus active"></div>
+                    <div class="remainUndoBonus active"></div>
+                </div>
+            </button>
+            <button class="reset-button">reset game</button>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>

@@ -46,3 +46,41 @@ h2, #score {
     margin: 20px auto;
     border-radius: 20px;
 }
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    margin-top: 0px;
+    margin-left: 5px;
+}
+
+.undo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.undo-bonus-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.remainUndoBonus {
+    width: 40px;
+    height: 40px;
+    margin: 25px 2px;
+    border: 5px solid #bbada0;
+}
+
+.active{
+    background-color: #8f7a66;
+}
+
+.remove{
+    background-color: #e6c8ac;
+}

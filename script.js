@@ -1,10 +1,15 @@
 const score = document.getElementById('score');
 const canvas= document.querySelector('.board');
+const undoButtons = document.querySelectorAll('.remainUndoBonus');
+const resetButton=document.querySelector('.reset-button');
 let width = 4;
 let board=[];
 startGame();
 let value = 0;
-let rightMove, downMove, upMove, leftMove = false;
+let undo = false;
+let previousBoard = [];
+let previousScore = 0;
+let undoBonus= 3;
 
 function startGame(){
     createBoard();
@@ -48,7 +53,6 @@ function moveUp() {
         board[col+8].innerHTML = filteredColumn[2];
         board[col+12].innerHTML = filteredColumn[3];
     }
-    addNewTile();
 }
 function moveDown() {
     for(let col=0; col<4; col++){
@@ -79,7 +83,6 @@ function moveDown() {
         board[col+8].innerHTML = filteredColumn[2];
         board[col+12].innerHTML = filteredColumn[3];
     }
-    addNewTile();
 }
 function moveLeft() {
     for(let i=0; i<16; i+=4){
@@ -110,14 +113,12 @@ function moveLeft() {
         board[i+2].innerHTML = filteredRow[2];
         board[i+3].innerHTML = filteredRow[3];
     }
-    addNewTile();
 }
-
 function addNewTile() {
-    const randomNumber = Math.floor(Math.random()*board.length);
-    if(board[randomNumber].innerHTML === '0') {
-        board[randomNumber].innerHTML = Math.random() < 0.8 ? '2' : '4';
-    }
+    const emptyTiles = board.filter(tile => tile.innerHTML === '0');
+    if(emptyTiles.length === 0) return;
+    const randomTile = emptyTiles[Math.floor(Math.random() * emptyTiles.length)];
+    randomTile.innerHTML = Math.random() < 0.8 ? '2' : '4';
 }
 function updateScore(value) {
     let merged = parseInt(score.innerHTML);
@@ -140,8 +141,13 @@ function resetGame() {
         tile.innerHTML = '0';
         tile.style.backgroundColor = '#96887bff';
     });
+    undoButtons.forEach(button => {
+        button.classList.remove('remove');
+        button.classList.add('active');
+    });
     addNewTile();
     addNewTile();
+    undoBonus=3;
 }
 function addColor(){
     for(let i=0; i<16; i++){
@@ -200,37 +206,73 @@ function moveRight() {
         board[i+2].innerHTML = filteredRow[2];
         board[i+3].innerHTML = filteredRow[3];
     }
-    addNewTile();
 }
-
+function saveState(){
+    previousBoard = board.map(tile => tile.innerHTML);
+    previousScore = parseInt(score.innerHTML) || 0;
+}
+function undoMove(){
+    if(previousBoard.length=== 16){
+        for(let i=0; i<16; i++){
+            board[i].innerHTML = previousBoard[i];
+        }
+        score.innerHTML = previousScore;
+        addColor(); // renkleri geri yükle
+    }
+}
 window.addEventListener('keydown', (event) => {
+    let moved = false;
     if(event.key === 'ArrowRight' || event.key === 'd') {
+        saveState();
         moveRight();
-        rightMove = true;
+        moved = true;
     }
     if(event.key === 'ArrowDown' || event.key === 's') {
+        saveState();
         moveDown();
-        downMove = true;
+        moved = true;
     }
     if(event.key === 'ArrowUp' || event.key === 'w') {
+        saveState();
         moveUp();
-        upMove = true;
+        moved = true;
     }
     if(event.key === 'ArrowLeft' || event.key === 'a') {
+        saveState();
         moveLeft();
-        leftMove = true;
+        moved = true;
     }
-            if(checkGameOver()) {
+
+    // Sadece hareket olduysa yeni tile ekle
+    if (moved) {
+        addNewTile();
+        addColor();
+        if(checkGameOver()) {
             alert('Game Over!');
             resetGame();
         }
+    }
 });
 
-document.querySelector('.reset-button').addEventListener('click', () => {
+resetButton.addEventListener('click', () => {
     score.innerHTML = '0';
     resetGame();
 });
+
 document.querySelector('.undo').addEventListener('click', () => {
-            if(rightMove) {}
+    if(undoBonus > 0){
+        undoBonus--;
+        undoMove();
+        undoBoxesChange();
+    }
+});
+
+function undoBoxesChange() {
+    undoButtons.forEach((button, index) => {
+        if(index < undoBonus) {
+            button.classList.remove('remove');
+        } else{            
+          button.classList.add('remove');
         }
-    )
+    });
+}
